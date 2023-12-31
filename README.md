@@ -80,9 +80,11 @@ Given a parking lot with details about the vehicle types that can be parked, the
 
 
 Run Examples:
-"""""""""""""
+
     -----------------
+
     EXAMPLE Output:
+    
     -----------------
 
 Parking Lot: Mall
