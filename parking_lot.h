@@ -9,7 +9,6 @@ typedef struct Ticket
     int Spot;
 } Ticket;
 
-// typedef struct Ticket *T_array;
 
 class Parking_Lot
 {
@@ -23,7 +22,6 @@ private:
     int num_tickets;
     int num_receipts;
     Ticket *t;
-    vector<Ticket> ticket;
 
 public:
     // Constructor
@@ -35,9 +33,7 @@ public:
         Available_Spots = number_spots;
         num_tickets = 0;
         num_receipts = 0;
-        // t[Number_of_Spots+1];
-        t = (Ticket *)malloc(sizeof(Ticket) * (Number_of_Spots + 1));
-        // t[Number_of_Spots + 1]={};
+        t = new Ticket[Number_of_Spots + 1];
         for (int i = 0; i <= Number_of_Spots; i++)
         {
             t[i].Spot = 0;
@@ -50,7 +46,7 @@ public:
             Available_Spots--;
             num_tickets++;
             string Ticket_No;
-            int Spot_No=0;
+            int Spot_No = 0;
             for (int i = 1; i <= Number_of_Spots; i++)
             {
                 if (t[i].Spot == 0)
@@ -58,10 +54,8 @@ public:
                     t[i].Spot = 1;
                     t[i].entry = entry_date_time;
                     Entry_Date_Time = t[i].entry;
-                    // t[i].ticket_num = "T1";
                     Ticket_No = "T" + to_string(num_tickets);
-                    // t[i].ticket_num = Ticket_No;
-                    (t[i].ticket_num).assign(Ticket_No);
+                    t[i].ticket_num = Ticket_No;
                     Spot_No = i;
                     break;
                 }
@@ -84,14 +78,19 @@ public:
         int Spot_No = 0;
         for (int i = 1; i <= Number_of_Spots; i++)
         {
-            // if (Ticket_No == t[i].ticket_num)
-            if (!Ticket_No.compare(t[i].ticket_num))
+            if (Ticket_No == t[i].ticket_num)
             {
                 Entry_Date_Time = t[i].entry;
                 t[i].Spot = 0;
                 Spot_No = i;
                 break;
             }
+        }
+        if(Spot_No==0)
+        {
+            cout << "--------------------------------------------------\n";
+            cout << "Invalid Ticket Number." << endl;
+            cout << "--------------------------------------------------\n";
         }
         string receipt_no = "R" + to_string(num_receipts);
         ParkingFees f(Parking_Location, Vehicle_Type, Entry_Date_Time, Exit_Date_Time);
